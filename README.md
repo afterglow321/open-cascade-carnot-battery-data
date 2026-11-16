@@ -8,6 +8,7 @@ This directory contains Aspen Plus simulation data and a trained PyTorch surroga
 | --- | --- |
 | [`dataset.csv`](dataset.csv) | 7,883 simulated operating points sampled using Latin hypercube sampling, with 36 columns covering inputs, simulation outputs, derived performance metrics, and labels. |
 | [`model.pt`](model.pt) | PyTorch checkpoint containing the trained weights, model configuration, feature and target order, standardization parameters, and training history. |
+| [`pareto_front.csv`](pareto_front.csv) | 100 operating points on the approximate Pareto front from surrogate-assisted multi-objective optimization. |
 
 ## Dataset
 
@@ -51,6 +52,12 @@ The rows below follow the checkpoint's `input_names` order. `vfrac`, `flow1`, an
 | `rho_NH3_L`, `rho_NH3_H`, `rho_H2O_L`, `rho_H2O_H` | Ammonia and water mass densities at the low- and high-temperature storage states, in kg/m³. |
 | `v1`, `v3` | Ammonia storage volume and phase-change material volume, respectively, in m³. |
 | `row_index`, `state`, `elapsed_s`, `error` | Row identifier, Aspen Plus run status code, elapsed simulation time in seconds, and any recorded diagnostic message. |
+
+## Pareto front
+
+[`pareto_front.csv`](pareto_front.csv) contains the operating points returned by multi-objective particle swarm optimization (MOPSO) using the surrogate model. Each row reports the three decision variables (`vfrac`, `flow1`, and `pres2`) and the corresponding surrogate predictions for round-trip efficiency (`eff`, a fraction) and volumetric energy storage density (`rho_st`, in kWh/m³).
+
+To plot the trade-off, use `rho_st` on the horizontal axis and multiply `eff` by 100 for the vertical axis in percent. Across the published points, round-trip efficiency ranges from 71.53% to 73.15%, and energy storage density ranges from 14.02 to 16.36 kWh/m³.
 
 ## License
 
